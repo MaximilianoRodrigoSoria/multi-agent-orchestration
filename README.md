@@ -1,3 +1,17 @@
+<p align="center">
+<a href="https://www.linkedin.com/in/soriamaximilianorodrigo/" target="_blank" rel="noopener noreferrer">
+<img width="100%" height="100%" src="docs/img/banner.gif" alt="multi-agent-orchestration"></a>
+</p>
+
+<p align="center">
+  <a href="#"><img src="https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white" alt="Python"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Orquestaci%C3%B3n-LangGraph-1C3C3C" alt="LangGraph"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Human--in--the--loop-si-7C3AED" alt="HITL"></a>
+  <a href="#"><img src="https://img.shields.io/badge/LLM-OpenAI_%7C_Anthropic-412991" alt="LLM"></a>
+</p>
+
+---
+
 # multi-agent-orchestration
 
 Sistema **multi-agente** con orquestación explícita y un paso de **human-in-the-loop (HITL)**: antes de ejecutar cualquier acción crítica (enviar un correo, cerrar un ticket, escribir en un sistema externo), el flujo se detiene y espera aprobación humana.
