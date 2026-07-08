@@ -1,0 +1,3 @@
+{"id": 1, "from": "ana@example.com", "subject": "No funciona el login en producción", "body": "Es urgente, nadie puede entrar."}
+{"id": 2, "from": "beto@example.com", "subject": "Consulta sobre mi factura", "body": "No entiendo un cobro de este mes."}
+{"id": 3, "from": "caro@example.com", "subject": "Sugerencia de mejora", "body": "Estaría bueno un modo oscuro."}

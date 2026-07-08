@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "multi-agent-orchestration"
+version = "0.1.0"
+description = "Sistema multi-agente con orquestación y human-in-the-loop (triage de tickets)."
+readme = "README.md"
+license = "MIT"
+authors = ["Maximiliano R. Soria"]
+packages = [{ include = "multi_agent_orchestration", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pydantic-settings = ">=2.3"
+
+# Orquestación con grafo (opcional): poetry install --with graph
+[tool.poetry.group.graph]
+optional = true
+
+[tool.poetry.group.graph.dependencies]
+langgraph = ">=0.2"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8.2"
+ruff = ">=0.5"
+black = ">=24.4"
+
+[tool.poetry.scripts]
+triage = "multi_agent_orchestration.app.cli:main"
+
+[build-system]
+requires = ["poetry-core>=1.9"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]

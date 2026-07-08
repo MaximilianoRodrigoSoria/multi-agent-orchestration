@@ -1,0 +1,8 @@
+[
+  "tests/test_approval.py::test_request_approval_invalida_termina_en_reject",
+  "tests/test_approval.py::test_request_approval_valida_y_reintenta",
+  "tests/test_approval.py::test_requires_approval",
+  "tests/test_orchestrator.py::test_accion_critica_pasa_por_gate",
+  "tests/test_orchestrator.py::test_flujo_aprobado_ejecuta",
+  "tests/test_orchestrator.py::test_flujo_rechazado_no_ejecuta"
+]
