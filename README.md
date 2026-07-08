@@ -94,7 +94,3 @@ flowchart TD
     H --> G
     G --> I[Resultado final + traza]
 ```
-
-## Criterios de "terminado"
-
-El sistema procesa un caso del negocio de punta a punta, **se detiene ante una acción crítica esperando aprobación humana**, y reanuda correctamente según la decisión (aprobar/rechazar/editar). Todo el recorrido queda trazado.
