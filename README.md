@@ -4,10 +4,10 @@
 </p>
 
 <p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white" alt="Python"></a>
-  <a href="#"><img src="https://img.shields.io/badge/Orquestaci%C3%B3n-LangGraph-14B8A6" alt="LangGraph"></a>
-  <a href="#"><img src="https://img.shields.io/badge/Human--in--the--loop-si-1DE9B6" alt="HITL"></a>
-  <a href="#"><img src="https://img.shields.io/badge/LLM-OpenAI_%7C_Anthropic-22D3EE" alt="LLM"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white&style=flat-square" alt="Python"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Orquestaci%C3%B3n-LangGraph-14B8A6?style=flat-square" alt="LangGraph"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Human--in--the--loop-si-1DE9B6?style=flat-square" alt="HITL"></a>
+  <a href="#"><img src="https://img.shields.io/badge/LLM-OpenAI_%7C_Anthropic-22D3EE?style=flat-square" alt="LLM"></a>
 </p>
 
 <p align="center">
