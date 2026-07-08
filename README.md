@@ -85,15 +85,14 @@ multi-agent-orchestration/
 
 ```mermaid
 flowchart TD
-    A[Entrada: ticket / objetivo] --> B[Planner: descompone en pasos]
-    B --> C[Researcher: recupera contexto (RAG / web / MCP)]
-    C --> D[Executor: PROPONE acción crítica]
-    D --> E{Human-in-the-loop:\naprobación requerida?}
-    E -- No / acción segura --> G[Critic: valida output]
-    E -- Sí --> F[[Pausa: espera aprobación humana]]
-    F -- Aprueba --> H[Ejecuta acción real]
-    F -- Rechaza / edita --> B
-    H --> G
+    A[Entrada: ticket] --> B[Planner: clasifica y arma el plan]
+    B --> C[Researcher: recupera contexto de la KB]
+    C --> D[Executor: PROPONE la respuesta]
+    D --> E{Aprobacion humana requerida}
+    E -- aprobar / editar --> H[Send: ejecuta la accion real]
+    E -- rechazar --> X[No se envia]
+    H --> G[Critic: valida el output]
+    X --> G
     G --> I[Resultado final + traza]
 ```
 
