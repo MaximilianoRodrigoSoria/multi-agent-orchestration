@@ -1,22 +1,21 @@
-"""Acciones del caso de negocio (triage de tickets)."""
+"""Herramientas del caso de triage de tickets.
+
+`send_reply` es la ACCIÓN CRÍTICA del flujo: en producción dispararía el envío
+real (API de email / helpdesk). Por eso solo se ejecuta después de que un humano
+aprobó en el gate. Acá se simula y se devuelve un recibo.
+"""
 
 from __future__ import annotations
 
-PRIORITY_KEYWORDS = {
-    "urgent": {"caído", "urgente", "no funciona", "producción", "bloqueado"},
-    "billing": {"factura", "cobro", "reembolso", "pago"},
-}
 
+def send_reply(ticket_id: str, reply: str) -> dict:
+    """Simula el envío de la respuesta al cliente y devuelve un recibo.
 
-def classify(ticket: dict) -> dict:
-    """Clasifica un ticket en categoría y prioridad (heurística, sin LLM)."""
-    text = f"{ticket.get('subject', '')} {ticket.get('body', '')}".lower()
-    priority = "high" if any(k in text for k in PRIORITY_KEYWORDS["urgent"]) else "normal"
-    category = "billing" if any(k in text for k in PRIORITY_KEYWORDS["billing"]) else "support"
-    return {"category": category, "priority": priority}
-
-
-def send_reply(payload: dict) -> str:
-    """Acción CRÍTICA: enviaría la respuesta al cliente. Aquí solo la simula."""
-    to = payload.get("to", "cliente")
-    return f"Respuesta enviada a {to} ({len(payload.get('body', ''))} chars)."
+    En un sistema real, acá iría la llamada a la API del helpdesk. Se mantiene
+    sin side-effects para que sea seguro de correr en cualquier entorno.
+    """
+    return {
+        "ticket_id": ticket_id,
+        "status": "sent",
+        "chars": len(reply or ""),
+    }

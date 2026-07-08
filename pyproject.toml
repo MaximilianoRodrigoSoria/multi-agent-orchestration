@@ -1,23 +1,33 @@
 [tool.poetry]
 name = "multi-agent-orchestration"
 version = "0.1.0"
-description = "Sistema multi-agente con orquestación y human-in-the-loop (triage de tickets)."
+description = "Sistema multi-agente con orquestación LangGraph y gate human-in-the-loop."
+authors = ["Maximiliano Rodrigo Soria <maximilianorodrigosoria@gmail.com>"]
 readme = "README.md"
-license = "MIT"
-authors = ["Maximiliano R. Soria"]
 packages = [{ include = "multi_agent_orchestration", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+langgraph = ">=1.2"
+langchain-core = ">=1.2"
 pydantic-settings = ">=2.3"
+python-dotenv = ">=1.0"
 
-# Orquestación con grafo (opcional): poetry install --with graph
-[tool.poetry.group.graph]
+# LLM local (opcional): poetry install --with local  → habilita LLM_PROVIDER=ollama
+[tool.poetry.group.local]
 optional = true
 
-[tool.poetry.group.graph.dependencies]
-langgraph = ">=0.2"
+[tool.poetry.group.local.dependencies]
+langchain-ollama = ">=0.2"
 
+# LLM Claude (opcional): poetry install --with cloud
+[tool.poetry.group.cloud]
+optional = true
+
+[tool.poetry.group.cloud.dependencies]
+langchain-anthropic = ">=0.2"
+
+# Herramientas de desarrollo (opcional): poetry install --with dev
 [tool.poetry.group.dev]
 optional = true
 
@@ -35,10 +45,13 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
 line-length = 100
-target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]

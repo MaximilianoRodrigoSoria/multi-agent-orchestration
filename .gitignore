@@ -1,8 +1,20 @@
-.env
-.venv/
-__pycache__/
-*.pyc
-.DS_Store
-# Podcast (no publicar)
+# Podcast / audio (excluidos del repo)
 podcast-guion.md
 *.wav
+*.mp3
+*-podcast.*
+podcast/
+audio/
+
+# Descarte de git roto del filesystem montado
+.trash-git-roto/
+
+# Entorno y secretos
+.env
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Sistema
+.DS_Store

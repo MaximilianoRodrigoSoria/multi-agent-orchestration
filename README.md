@@ -37,7 +37,7 @@ Demostrar diseño de sistemas agénticos serios, no un demo de "un agente que ll
 2. **Human-in-the-loop** — las acciones con efectos secundarios reales pasan por un gate de aprobación; el estado se persiste y el flujo puede reanudarse.
 3. **Caso de negocio concreto** — aplicado a **triage de tickets de soporte** (clasificar, priorizar, proponer respuesta, y solo enviar tras aprobación) o, como alternativa, **investigación web automatizada** (planificar, buscar, sintetizar, y solo publicar tras aprobación).
 
-## Stack tecnológico sugerido
+## Stack tecnológico
 
 - **Lenguaje:** Python 3.11+
 - **Framework de orquestación:** LangGraph (recomendado por su soporte nativo de `interrupt`/checkpointing para HITL) — alternativas: CrewAI, AutoGen
@@ -47,36 +47,38 @@ Demostrar diseño de sistemas agénticos serios, no un demo de "un agente que ll
 - **Interfaz de aprobación:** CLI interactiva para empezar; opción de UI mínima con Streamlit o FastAPI + un endpoint `/approve`
 - **Testing / calidad:** pytest, ruff, black
 
-## Estructura de carpetas propuesta
+## Estructura de carpetas
 
 ```
 multi-agent-orchestration/
 ├── README.md
+├── AGENTS.md                        # Ruleset ponytail (código mínimo)
 ├── pyproject.toml
 ├── .env.example
 ├── src/
-│   ├── config.py
-│   ├── state.py             # Definición del estado compartido del grafo
-│   ├── graph.py             # Construcción del grafo de orquestación
-│   ├── agents/
-│   │   ├── planner.py       # Descompone el objetivo en pasos
-│   │   ├── researcher.py    # Recupera/investiga (RAG, web, MCP tools)
-│   │   ├── executor.py      # Propone/ejecuta acciones (tras aprobación)
-│   │   └── critic.py        # Valida y refina el output
-│   ├── tools/
-│   │   ├── ticket_tools.py  # Acciones del caso de negocio
-│   │   └── web_tools.py     # Búsqueda web (alternativa)
-│   ├── hitl/
-│   │   └── approval.py      # Gate de aprobación humana + reanudación
-│   └── app/
-│       └── cli.py           # Punto de entrada interactivo
+│   └── multi_agent_orchestration/   # Paquete importable (src layout)
+│       ├── config.py               # Settings (pydantic-settings)
+│       ├── state.py                # TicketState: estado compartido del grafo
+│       ├── llm.py                  # LLM conmutable (Ollama/Claude) + inyección
+│       ├── graph.py                # Grafo LangGraph + interrupt_before (HITL)
+│       ├── agents/
+│       │   ├── planner.py          # Clasifica el ticket y arma el plan
+│       │   ├── researcher.py       # Recupera contexto (KB; extensible a RAG/MCP)
+│       │   ├── executor.py         # Redacta la respuesta PROPUESTA (no envía)
+│       │   └── critic.py           # Valida el output final
+│       ├── tools/
+│       │   └── ticket_tools.py     # Acción crítica: enviar la respuesta
+│       ├── hitl/
+│       │   └── approval.py         # Lógica del gate (aplica la decisión humana)
+│       └── app/
+│           └── cli.py              # CLI interactiva (punto de entrada)
 ├── examples/
-│   └── sample_tickets.jsonl # Datos de ejemplo del caso de negocio
+│   └── sample_tickets.jsonl        # Tickets de ejemplo
 ├── docs/
-│   └── flow.md              # Diagrama del flujo (Mermaid) y roles
-└── tests/
-    ├── test_graph.py
-    └── test_approval.py
+│   └── flow.md                     # Diagrama del flujo (Mermaid) y roles
+└── tests/                          # Offline, con LLM mockeado
+    ├── test_graph.py               # Grafo + gate HITL (LangGraph real)
+    └── test_approval.py            # Lógica de decisión humana
 ```
 
 ## Diagrama de flujo (referencia)
@@ -94,3 +96,51 @@ flowchart TD
     H --> G
     G --> I[Resultado final + traza]
 ```
+
+## Puesta en marcha
+
+Stack: **LangGraph** (orquestación + `interrupt` para HITL) con LLM conmutable
+(**Ollama** local o **Claude**). Los agentes reciben el LLM inyectado, así los
+tests corren offline con un mock.
+
+### 1. Instalar dependencias
+
+```bash
+# Con Poetry
+poetry install --with dev,local   # + local habilita Ollama
+
+# o con pip (sin Poetry)
+python -m pip install --user -r requirements-all.txt
+```
+
+### 2. Configurar el entorno
+
+```bash
+cp .env.example .env
+# Elegir LLM_PROVIDER (ollama/anthropic); si es Claude, completar ANTHROPIC_API_KEY.
+```
+
+### 3. Correr el triage (con gate humano)
+
+```bash
+set PYTHONPATH=src
+python -m multi_agent_orchestration.app.cli --ticket-id T-1001
+```
+
+El flujo se detiene, muestra la respuesta **propuesta** y espera tu decisión:
+aprobar, editar o rechazar. Recién si aprobás se ejecuta la acción crítica (enviar).
+Para una demo no interactiva:
+
+```bash
+python -m multi_agent_orchestration.app.cli --ticket-id T-1001 --auto-approve
+```
+
+### 4. Tests (offline, sin API ni red)
+
+```bash
+poetry run pytest          # o:  set PYTHONPATH=src  &&  python -m pytest
+```
+
+Los tests usan un `FakeLLM` y ejercitan el grafo real de LangGraph, incluyendo
+la pausa en el gate y las tres decisiones (aprobar / editar / rechazar).
+

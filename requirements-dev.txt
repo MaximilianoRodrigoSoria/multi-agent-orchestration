@@ -1,0 +1,7 @@
+# Mínimo para correr el grafo y los tests offline (con LLM mockeado).
+# Instalar:  python -m pip install --user -r requirements-dev.txt
+langgraph>=1.2
+langchain-core>=1.2
+pydantic-settings>=2.3
+python-dotenv>=1.0
+pytest>=8.2

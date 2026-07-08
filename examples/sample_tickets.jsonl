@@ -1,3 +1,4 @@
-{"id": 1, "from": "ana@example.com", "subject": "No funciona el login en producción", "body": "Es urgente, nadie puede entrar."}
-{"id": 2, "from": "beto@example.com", "subject": "Consulta sobre mi factura", "body": "No entiendo un cobro de este mes."}
-{"id": 3, "from": "caro@example.com", "subject": "Sugerencia de mejora", "body": "Estaría bueno un modo oscuro."}
+{"ticket_id": "T-1001", "subject": "No puedo iniciar sesión", "body": "Desde ayer no puedo entrar a mi cuenta, me dice contraseña incorrecta pero estoy seguro de que es la correcta. Necesito resolverlo urgente porque tengo que facturar hoy."}
+{"ticket_id": "T-1002", "subject": "Me cobraron dos veces", "body": "En el resumen de la tarjeta aparecen dos cargos iguales del mismo día. Quiero que me reembolsen uno."}
+{"ticket_id": "T-1003", "subject": "Cambiar el email de la cuenta", "body": "Quiero actualizar el correo asociado a mi cuenta porque ya no uso el anterior. ¿Cómo hago?"}
+{"ticket_id": "T-1004", "subject": "Consulta general", "body": "Hola, quería saber si tienen convenios con universidades. Gracias."}

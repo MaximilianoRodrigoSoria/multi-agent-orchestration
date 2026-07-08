@@ -1,0 +1,10 @@
+# Todo lo necesario para correr y testear (sin Poetry).
+# Instalar:  python -m pip install --user -r requirements-all.txt
+langgraph>=1.2
+langchain-core>=1.2
+langchain-ollama>=0.2
+langchain-anthropic>=0.2
+pydantic-settings>=2.3
+python-dotenv>=1.0
+# tests
+pytest>=8.2
