@@ -122,6 +122,15 @@ cp .env.example .env
 
 ### 3. Correr el triage (con gate humano)
 
+Si usás Ollama local, levantá el servidor con Docker (la primera vez, para bajar el modelo):
+
+```bash
+docker compose up -d ollama
+docker compose --profile pull up ollama-pull   # descarga OLLAMA_MODEL una sola vez
+```
+
+Después corré el flujo:
+
 ```bash
 set PYTHONPATH=src
 python -m multi_agent_orchestration.app.cli --ticket-id T-1001
